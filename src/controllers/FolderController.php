@@ -4,6 +4,8 @@ namespace Unisharp\Laravelfilemanager\controllers;
 
 use Illuminate\Support\Facades\File;
 
+use Unisharp\Laravelfilemanager\Events\FolderWasCreated;
+
 /**
  * Class FolderController.
  */
@@ -70,6 +72,9 @@ class FolderController extends LfmController
         }
 
         parent::createFolderByPath($path);
+
+        event(new FolderWasCreated(realpath($path)));
+        
         return parent::$success_response;
     }
 }

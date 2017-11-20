@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\File;
 use Unisharp\Laravelfilemanager\Events\ImageIsDeleting;
 use Unisharp\Laravelfilemanager\Events\ImageWasDeleted;
 
+use Unisharp\Laravelfilemanager\Events\FolderWasDeleted;
+
 /**
  * Class CropController.
  */
@@ -39,6 +41,8 @@ class DeleteController extends LfmController
             }
 
             File::deleteDirectory($file_to_delete);
+
+            event(new FolderWasDeleted($file_to_delete));
 
             return parent::$success_response;
         }
